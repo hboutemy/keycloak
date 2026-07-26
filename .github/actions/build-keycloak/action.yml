@@ -37,6 +37,9 @@ runs:
       name: Build Keycloak
       shell: bash
       run: |
+        # Ensure mvnflight extension (not available in Maven Central) gets resolved first
+        mkdir .mvn/.mvn
+        ./mvnw -f .mvn dependency:resolve
         # Ensure this plugin is built first to avoid warnings in the build
         ./mvnw install -Pdistribution -am -pl distribution/maven-plugins/licenses-processor
         # By using "dependency:resolve", it will download all dependencies used in later stages for running the tests
